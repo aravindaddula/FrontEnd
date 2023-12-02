@@ -1,0 +1,52 @@
+.App{
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+}
+
+header{
+  background-color: orange;
+  padding: 2px 0px 2px 5%;
+  color: white;
+}
+
+.notes{
+  background-color: white;
+  margin-left: 20px;
+  padding-left: 10px;
+  width: 25%;
+  height: auto;
+  border-radius: 10px;
+}
+
+footer{
+  position: absolute;
+  bottom:0;
+  margin-left: 45%;
+  opacity: 0.3;
+}
+
+/* For fcc QUotes */
+/* .quotes-block */
+.quotes-block{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color:blue ;
+  border: 3px solid black;
+  height: auto;
+  width: 100px;
+  padding: 30px;
+  color:white;
+  font-weight: 1000;
+  border-radius: 10px;
+}
+
+.quotes-block>h3{
+  color: black;
+  margin: 0px 0px 0px 50%;
+}
