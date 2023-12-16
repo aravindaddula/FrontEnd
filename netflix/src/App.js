@@ -17,12 +17,12 @@ function App() {
     setLoggedIn(childData)
   }
   return (
-    <div>
-       <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>
-       <div className='articles'>
-       {isLoggedIn ? <NewsDashBoard/> : <LoginForm handleLogin={handleLogin}/> }
-       </div>
-    </div>
+      <div>
+        <Header isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>
+        <div className='articles'>
+        {isLoggedIn ? <NewsDashBoard/> : <LoginForm handleLogin={handleLogin}/>}
+        </div>
+      </div>
   );
 }
 

@@ -1,0 +1,339 @@
+const products = [  { name: "sports car" },  { name: "laptop" },  { name: "phone" }];
+let priceObj = products.map(prd =>({name:prd.name,price:100}))
+console.log(priceObj)
+-----------
+const products = [  { name: "sports car" },  { name: "laptop" },  { name: "phone" }];
+let priceObj = products.map(prd =>({...prd,price:100}))
+console.log(priceObj)
+
+----Spread operator
+1.Remove last property from object
+
+let prod = {product: 'laptop', price: 100, model: 'xp'}
+let {model, ...rmModel} = prod
+console.log(rmModel)
+
+------
+when you dont know what object you need to remove then use it.
+
+let attribute = 'name';
+const obj3 = {name: "sports car", model: 'xps', price: 100};
+const {[attribute]: attrib, ...rest} = obj3;
+console.log(rest);
+console.log(attrib);
+
+-----------
+input array
+const kvs = [  { key: 1, value: 10 },  { key: 2, value: 20 },  { key: 3, value: 30 },];
+i want output like this:
+[{ 1: 10 }, { 2: 20 }, { 3: 30 }]
+
+const kvs = [{ key: 1, value: 10 },  { key: 2, value: 20 },  { key: 3, value: 30 }];
+let newKvs = kvs.map(item=>({[item.key]:item.value}))
+console.log(newKvs)
+
+How Not to use way:1
+let newKvs = kvs.map(item=>([item.key]:item.value)
+way:2
+let newKvs = kvs.map(item=>({item.keyy:item.valuee}))
+
+if you try like this it will generate UnExpectedToken Error because you are trying to generate JSON object i.e going contain key:value
+pairs , so this is illegel syntax.
+you need to access the key in [obj.key] format. while generating JSON Object.
+
+
+------------ solve it
+output: {1: {key: 1, value: 10}, 2:  { key: 2, value: 20 }, 3: { key: 3, value: 30 }}
+
+const kvs = [  { key: 1, value: 10 },  { key: 2, value: 20 },  { key: 3, value: 30 }];
+let newKvs = kvs.reduce( (result,currVal) =>{
+    result[currVal.key]=currVal
+    //console.log(result)
+    //console.log( result[currVal.key])
+    return result
+},{})
+console.log(newKvs)
+
+------------solve it
+const friends = [{ name: "Anna", books: ["Bible", "Harry Potter"] },
+				 { name: "Bob", books: ["War and peace", "Romeo and Juliet"] },
+				 { name: "Alice", books: ["The Lord of the Rings", "The Shining"] }];
+
+output:	["Bible", "Harry Potter","War and peace", "Romeo and Juliet","The Lord of the Rings", "The Shining"]
+
+const friends = [  { name: "Anna", books: ["Bible", "Harry Potter"] },  { name: "Bob", books: ["War and peace", "Romeo and Juliet"] },  { name: "Alice", books: ["The Lord of the Rings", "The Shining"] }];
+let getBooks = friends.reduce((allBooks, currentVal) =>[...allBooks, ...currentVal.books], []);
+console.log(getBooks);
+
+-->How do you return object of books from above
+const friends = [  { name: "Anna", books: ["Bible", "Harry Potter"] },
+                 { name: "Bob", books: ["War and peace", "Romeo and Juliet"] },
+                 { name: "Alice", books: ["The Lord of the Rings", "The Shining"] }];
+let getBooks = friends.reduce((allBooks, currentVal) =>{
+    return [...allBooks, ...currentVal.books]    
+},[]);
+console.log(({"books":getBooks}));
+
+----> More sophisticated and readable approach
+const friends = [  { name: "Anna", books: ["Bible", "Harry Potter"] },
+                 { name: "Bob", books: ["War and peace", "Romeo and Juliet"] },
+                 { name: "Alice", books: ["The Lord of the Rings", "The Shining"] }];
+let getBooks = friends.flatMap(book =>book.books);
+console.log({"books":getBooks});
+
+---> you can also try like
+let books = friends.reduce((accum,currVal) => //[...accum, ...currVal.books]
+    {
+        return accum.concat(currVal.books)
+    }    
+,[])
+
+=====================================
+---Concatenating uneven arrays
+let data = [
+  ["The","red", "horse"],
+  ["Plane","over","the","ocean"],
+  ["Chocolate","ice","cream","is","awesome"], 
+  ["this","is","a","long","sentence"]
+]
+let dataConcat = data.map(item=>item.reduce((a,i)=>`${a} ${i}`))
+
+// Result
+['The red horse', 
+'Plane over the ocean', 
+'Chocolate ice cream is awesome', 
+'this is a long sentence']
+
+
+---React
+1.let and const dont support hoisting, only var supports it.
+2.
+
+
+
+========
+const obj3 = {name: "sports car", model: 'xps', price: 100};
+
+function user(prop){
+
+return obj3[prop]
+}
+
+user(name)
+
+
+==== 
+remove property without mutating the object
+const obj3 = {name: "sports car", model: 'xps', price: 100};
+
+function user(prop){
+const {[prop]:removedProperty,...rest} = obj3
+return rest
+}
+// console.log(model)
+console.log(removedProperty)
+
+=====> return keys of object 
+const obj3 = {name: "sports car", model: 'xps', price: 100};
+
+console.log(Object.keys(obj3)) //returns an array of keys
+console.log(Object.values(obj3))
+
+----> FreeCodecamp Quites Api
+
+https://type.fit/api/quotes
+https://quotes.rest/quote/random
+
+---- Reduce realtime usecases
+
+1.perform same like groupby with all the fields with count operation.
+
+const fruits = [ 'Banana', 'Orange', 'Apple', 'Orange','Banana', 'Pear']
+let allCounts=fruits.reduce((accumFruit,fruit)=>{
+    return {...accumFruit,[fruit]:( accumFruit[fruit] || 0 ) + 1 }
+},{})
+console.log(allCounts)
+
+2.
+
+<=================================>
+
+• Develops and designs features for dickblick.com in React js, Next.js, Javascript, Typescript, Hooks,
+  HTML, Tailwind CSS, GraphQL/Restful API stack and writes unit tests for those features in Jest and e2e tests in Cypress.
+  
+• Works closely with the design, API, and testing team to build reusable components to reduce development time,
+  improve stylistic consistency, improve website performance, and reduce technical debt.
+  
+• Leading effort to modernize e-commerce platform to improve performance and enhance the customer’s buying experience.
+
+<======================>
+
+Client : S&P Ratings
+Role : Lead UI and Backend Engineer
+
+Project Description:
+
+RAP(Ratings Analytical Platform), is a credit rating platform dedicated to Auto ABS (Asset Backed Securities)
+
+Roles and Responsibilities:
+
+• Involve in product discussions and PI plannings TO evaluate highlevel features and came up with actionalble userstories.
+• Involve in creating user interfaces for mobile / tablet / desktop using HTML / CSS/ JAVASCRIPT and UI frameworks like Angular, React, bootstrap.
+• develop restful api's using Spring boot, Spring cloud, Hibernate, JPA, Docker, Kubernetes, AWS and AWS cloud functions.
+• create pub/sub architecture for ingesting real time updates across multiple microservices to provide realtime updates to the end user.
+• Implement internationalization to enable easy localization for end customers that vary in culture, region or lanuage.
+• Mentoring junior resorces in my team. Performing code reviews, giving constructive feedbacks to help junior developers to expand their skills.
+• Involved in writing unit tests and integration tests using frameworks like Junit, Jest .
+• Involve in customer support to resolve production tickets accurately with in the SLA.
+
+
+---------->
+
+Project - Transfer Pricing Documenter
+
+Customer - Thomson Reuters.
+
+Role - Tech. Lead
+
+Project Name: Transfer pricing is price set for transactions (goods, services and intangibles) between related parties 
+	in the same multinational corporation. The price has to be set according to the Arm's Length principle, i.e. 
+	what unrelated parties would pay for the same goods/service. If the Arm's length principle is not followed,
+	MNEs can shift their profits from high tax jurisdictions to low/no tax jurisdictions to minimize their global tax paid. 
+	This can lead to penalties during TAX Office's audits. To protect against this, companies should keep the 
+	Transfer Pricing documentation - penalty mitigation and first line of defense.
+
+Technologies and Tools - Angular 9, Angular JS, TypeScript, Javascript, Bootstrap, Bento UI, HTML, Sass.
+		CSS, Wijimo grids, JIRA, Jenkins, Jfrog- Arficatory
+
+----------->
+
+Project - Hardware Refresh – Sales Desk Modernization
+Customer - AXA Equitable Life Insurance Company (EQH)
+Role - Tech. Lead
+Project Name: Hardware Refresh – SalesDesk Modernization project is an as is migration of Sales Desk application on 
+a legacy platform (VB6) to Cloud ready Digital platform using Angular for View and Spring boot for Back End Microservices.
+The project was driven in agile methodology and will be deployed in on-premise Linux servers using CI/CD.
+
+SalesDesk is a Wholesale Broker Management application hosted on EQH network. SalesDesk has below functionalities.
+Setting up Brokerage firms, branches, regions, Agencies (different levels).
+Adding Brokers (Under any of the above levels).
+Managing Broker Licences (Adding, terminating, deleting), Trainings, Contract Histories, Comments at broker Level.
+Adding/removing Superior brokers
+Generating termination Letters.
+Moving Brokers across branches/regions/agencies.
+
+
+Roles and Responsibilities -
+ Came up with the proposed Architecture diagrams, reviewed the same with Solution Architect from EQH and got Signed-off.
+ Participated in sprint planning meetings.
+ Conducted daily calls with the team to ensure everyone in the team has correct understanding of their tasks and also to discuss on the hard stops and finalize on the approach based on the discussion.
+ Participated in the Development Activity (Lead developer for Angular part of the application).
+ Participated in status meetings with clients.
+ Participated in the Infra set-up meetings with the clients and ensured the timely delivery of the infrastructure from customer (Setting up of App servers, Web servers, Load balancers, Open AM configuration etc).
+ Tracking and timely closure or defects.
+ Ensured on time closure of Veracode scan and Pen test vulnerabilities.
+ Played a crucial role in successfully closing the project on time and with a very minimal no.of defects
+
+================================>
+
+Questions:
+
+1.Which css framework is using
+2.which react version is using, is it upto date as per the market or LTS.
+3.How do they get requirements
+4.will developer get figma file to design UI
+5.what react developer do on day to basis
+6.packages usin in the project
+7.if the existing code is in es5 then do i need to continue in es5 or es6 for the change requests and new developments.
+8.which ORM/ODM using and version.
+9.
+
+<-------------------------------->
+
+Project Idea for GlobeLife:
+	1.why shouldn't a MF app build in ReactJs, like migration from MF to React front end.
+	2.Build OIPA product.( copy the idea from the GL Etl see the resume )
+
+	Legacy mainframe modernization
+	Interface and functionality like airflow
+	Policy dashboards to see the status of the policies of different insurance providers like AIL,LNL.
+	Filters to see various policy statuses like IVTAX,GAAP_STAT, DR in single dashboard.
+	Individual modules/dashboards for Insurance Agent and Business User.
+
+
+<-------------------------------->
+
+	1.stashing conflicts in local and staging
+	get latest changes before pushing
+
+
+<---------Rajesh Koka summary----------------------->
+
+ConsultantConsultant
+ITCrats Info Solutions Pvt Ltd · Full-timeITCrats Info Solutions Pvt Ltd · Full-time
+Apr 2018 - Present · 5 yrs 9 mosApr 2018 - Present · 5 yrs 9 mos
+Hyderabad Area, IndiaHyderabad Area, India
+• Develops and designs features for dickblick.com in React js, Next.js, Javascript, Typescript, Hooks, HTML, Tailwind CSS,
+	GraphQL/Restful API stack and writes unit tests for those features in Jest and e2e tests in Cypress.
+• Works closely with the design, API, and testing team to build reusable components to reduce development time,
+	improve stylistic consistency, improve website performance, and reduce technical debt.
+• Leading effort to modernize e-commerce platform to improve performance and enhance the customer’s buying experience.
+• Develops and designs features for dickblick.com in React js, Next.js, Javascript, Typescript, Hooks, HTML, Tailwind CSS,
+  GraphQL/Restful API stack and writes unit tests for those features in Jest and e2e tests in Cypress. 
+• Works closely with the design, API, and testing team to build reusable components to reduce development time,
+  improve stylistic consistency, improve website performance, and reduce technical debt.
+• Leading effort to modernize e-commerce platform to improve performance and enhance the customer’s buying experience.
+
+Skills: Web Content Accessibility Guidelines (WCAG) · Tailwind CSS · Agile Methodologies · ECMAScript 
+		· Document Object Model (DOM) · React Hooks · Cross-browser Compatibility · Web Development · User Interface Design 
+		· Responsive Web Design · styled-components · Unit Testing · Webpack · Babel.js · Front-End Development · REST APIs
+		· Requirements Analysis · GraphQL · Next.js · React.js · JavaScript · TypeScript · Node.js · JIRA · Git
+		
+		
+---> Interview Questions on Node.js
+1.what is event loop, why chrome uses v8 engine,callback hell,what are javascript generators,
+difference between nestjs and express, streaming in nodejs,what do you understand about event emitters,
+difference between event emitters and publish and subscribe design pattern,
+what kind of database are you familiar with nodejs,difference between mongodb and postgres,
+do you have any experience with websockets,what the difference between that one application thatuse websockets and rest api.
+,how do you describe graphql,
+how do you keep upto date with nodejs
+
+<-------------ReactJs----------------->
+1.what is automatic batching.
+2.what are transitions, how these are different from bouncing and setTimeout
+3.what is suspense on the server.
+4.what is reconcilliation , is there any algorithm we can implement to improve perfomance.
+5.WHat is higher order component.
+6.perfomance to improve techniques react app.
+7.architecture difference between react and angular
+8.prevent reendering in react js
+9.is the project classbased or function based, do you have experience worked with classbased component.
+	if you start project today which one would you pick and why?
+10.1 explain how the reactJS works, ho it is different from regular html.
+10.how do you explain the virtual DOM to a technical person.
+11.suppose a componet has 3 states , when an event happens will it update one by one?
+12. global state management libraries like redux.
+13. how can we test react applications , best practices to test react app.
+14.any experiencewith deploying react applications.
+15.best practices to use reactJS
+16.what do you understand about code splitting, how can we code splits react application
+17.how do you difference between state and context
+18.what is prop drilling
+19.How to debig react application
+20.mocha
+
+************	Basics to Know:
+1.variables
+2.Hoisting
+3.functions => arrow functions , Higher order functions
+4.Arrays and objects
+5.conditions
+6.optional chaining
+7.event listeners -> event bubbling, event capture
+8.Callbacks,callback hell,promises
+9.Async,await
+10.Error handling ->try,catch
+11.
+
+************	Skills I need to add:
